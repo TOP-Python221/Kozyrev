@@ -19,9 +19,6 @@ class Utc:
     def __str__(self):
         return f'{Utc.TimeOfDay[self.hd]}'
 
-
-# Если я правильно понял задание
-
 u1 = Utc(3)
 print(u1)
 # Вечер
