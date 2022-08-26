@@ -17,9 +17,11 @@ class Utc:
         self.hd = datetime.datetime.strftime(self.tn, "%H")
 
     def __str__(self):
-        return f'{Utc.TimeOfDay[self.hd]}\n'\
+        return f'{Utc.TimeOfDay[self.hd]}\n' \
                f'{datetime.datetime.strftime(self.tn, "%H:%M")}'
+
 
 u1 = Utc(3)
 print(u1)
 # Вечер
+# 22:07
