@@ -1,12 +1,12 @@
-import enum
+from enum import Enum
 
 
-class Gender(enum):
+class Gender(Enum):
     MALE = 'man'
     FEMALE = 'woman'
 
 
-class Degree(enum):
+class Degree(Enum):
     BACHELOR = 'Bac'
     MASTER = 'Mas'
     DOCTOR = 'Doc'
@@ -37,16 +37,17 @@ class Employee(Person):
         self.salary = salary
 
 
-class Administator(Employee):
+class Administrator(Employee):
     def __init__(self,
                  name: str,
                  birthdate: str,
                  gender: Gender,
                  position: str,
                  salary: int,
-                 # supervisor: Administator,
+                 supervisor: None,
                  subordinates=None):
         super().__init__(name, birthdate, gender, position, salary)
+        self.supervisor = supervisor
         if subordinates is None:
             subordinates = []
         self.subordinates = subordinates
@@ -110,7 +111,7 @@ class SecurityPersonnel(Employee):
     pass
 
 
-class EducationForms(enum):
+class EducationForms(Enum):
     INTRAMURAL = 'Intra'
     EXTRAMURAL = 'Extra'
     REMOTE = 'Rem'
@@ -139,7 +140,7 @@ class Student(Person):
 class OrganizationLevel:
     def __init__(self,
                  name: str,
-                 head: Administator,
+                 head: Administrator,
                  employees: list[Employee],
                  address: str
                  # budget
@@ -163,3 +164,35 @@ class OrganizationLevel:
 
     def set_annual_budget(self, amount: int):
         pass
+
+
+
+
+
+class Department:
+    def __init__(self,
+                 groups: dict[str, Group]):
+        self.groups = groups
+
+
+class Institute:
+    def __init__(self,
+                 departments: dict[str, Department]):
+        self.departments = departments
+
+
+class University:
+    def __init__(self,
+                 institutes: dict[str, Institute]):
+        self.institutes = institutes
+
+    def __str__(self):
+        pass
+
+
+class Group:
+    def __init__(self,
+                 number_group: str,
+                 specialty: str):
+        self.number_group = number_group
+        self.specialty = specialty
