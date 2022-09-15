@@ -166,7 +166,12 @@ class OrganizationLevel:
         pass
 
 
-
+class Group:
+    def __init__(self,
+                 number_group: str,
+                 specialty: str):
+        self.number_group = number_group
+        self.specialty = specialty
 
 
 class Department:
@@ -188,11 +193,3 @@ class University:
 
     def __str__(self):
         pass
-
-
-class Group:
-    def __init__(self,
-                 number_group: str,
-                 specialty: str):
-        self.number_group = number_group
-        self.specialty = specialty
