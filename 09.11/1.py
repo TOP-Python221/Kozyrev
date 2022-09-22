@@ -177,6 +177,7 @@ class OrganizationLevel:
         pass
 
 
+# ДОБАВИТЬ: наследование от базового класса list
 class Group:
     def __init__(self,
                  number_group: str,
