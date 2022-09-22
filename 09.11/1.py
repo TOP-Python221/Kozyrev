@@ -18,6 +18,7 @@ class Person:
                  gender: Gender):
         self.gender = gender
         self.birthdate = birthdate
+        # ОТВЕТИТЬ: это очень хорошо! а вы понимаете, что сделали с этим атрибутом?
         self.__name = name
 
     @property
@@ -44,8 +45,10 @@ class Administrator(Employee):
                  gender: Gender,
                  position: str,
                  salary: int,
-                 supervisor: None,
-                 subordinates=None):
+                 # ИСПРАВИТЬ: здесь вы указали None в качестве аннотации типа, а не значения по умолчанию
+                 # ИСПОЛЬЗОВАТЬ: когда нам нужно аннотировать создаваемый класс, то мы можем взять имя этого класса в кавычки, чтобы избежать ошибок
+                 supervisor: 'Administrator' = None,
+                 subordinates: list[Employee] = None):
         super().__init__(name, birthdate, gender, position, salary)
         self.supervisor = supervisor
         if subordinates is None:
@@ -60,7 +63,7 @@ class ProfessionalEmployee(Employee):
                  gender: Gender,
                  position: str,
                  salary: int,
-                 degree: Degree.BACHELOR,
+                 degree: Degree = Degree.BACHELOR,
                  experience: int = 0):
         super().__init__(name, birthdate, gender, position, salary)
         self.degree = degree
@@ -77,16 +80,19 @@ class Teacher(ProfessionalEmployee):
                  degree: Degree = Degree.MASTER,
                  professorship: bool = False,
                  experience: int = 0,
-                 course=None):
-        super().__init__(name, birthdate, gender, position, salary, experience)
-        if course is None:
-            course = []
-        self.__course = course
+                 courses: list[str] = None):
+        # ИСПОЛЬЗОВАТЬ: лучше отправить полученный аргумент degree в конструктор надкласса, чем переопределять поле — так вы и ошибок при вызове родительского конструктора избежите, и значение по умолчанию переопределите
+        super().__init__(name, birthdate, gender, position, salary, degree, experience)
+        if courses is None:
+            courses = []
+        # ИСПОЛЬЗОВАТЬ: квадрат — это частный (private) атрибут — мы намекаем, что не стоит к этому полю обращаться напрямую, но если очень надо...
+        self._course = courses
         self.professorship = professorship
+        # УДАЛИТЬ: это поле определяется в конструкторе надкласса, здесь не нужно его переопределять
         self.degree = degree
 
     def add_course(self, course: str):
-        self.__course.append(course)
+        self._course.append(course)
         # self.__rem_course.remove(course)
 
 
@@ -99,7 +105,9 @@ class Researcher(ProfessionalEmployee):
                  salary: int,
                  experience: int = 0,
                  degree: Degree = Degree.MASTER):
+        # ИСПРАВИТЬ: вы передаете аргумент experience в параметр degree родительского конструктора
         super().__init__(name, birthdate, gender, position, salary, experience)
+        # УДАЛИТЬ: это поле определяется в конструкторе надкласса, здесь не нужно его переопределять
         self.degree = degree
 
 
@@ -142,17 +150,20 @@ class OrganizationLevel:
                  name: str,
                  head: Administrator,
                  employees: list[Employee],
-                 address: str
-                 # budget
+                 address: str,
+                 budget: int
                  ):
         self.address = address
-        self.__employees = employees
-        self.__head = head
+        self._employees = employees
+        self._head = head
         self.name = name
+        # ИСПОЛЬЗОВАТЬ: а ромб — это защищённый (protected) атрибут — для него включается механизм искажения имён
+        self.__budget = budget
 
     def __str__(self):
         pass
 
+    # ИСПРАВИТЬ: в этом и двух следующих методах: имена классов у вас использованы в качестве параметров, придумайте другие имена параметров, а имена классов используйте для аннотаций
     def change_head(self, Administrator):
         pass
 
@@ -193,3 +204,9 @@ class University:
 
     def __str__(self):
         pass
+
+
+# СДЕЛАТЬ: сейчас нужно создать "каждой твари по паре" и посмотреть на агрегацию, на то, как мы можем из одного объекта получать доступ к его компонентам
+
+
+# ИТОГ: хорошо, но мало — 8/12
