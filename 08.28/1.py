@@ -1,12 +1,14 @@
 """Представление матрицы с обычными атрибутами"""
 
-
 class Matrix:
     def __init__(self, elem):
         self.elem = elem
 
     def __str__(self):
-        self.show_elem = '\n'.join(['\t'.join([str(j) for j in i]) for i in self.elem])
+        self.show_elem = '\n'.join([
+            '\t'.join([str(j) for j in i])
+            for i in self.elem
+        ])
         return self.show_elem
 
     def __add__(self, other):
@@ -35,7 +37,6 @@ class Matrix:
 
 
 g = [[1, 2, 3, 4], [5, 6, 7, 8], [1, 5, 3, 66]]
-
 a = [[5, 25, 35, 45], [57, 66, 75, 84], [15, 56, 37, -24]]
 
 m1 = Matrix(g)
@@ -45,11 +46,13 @@ m4 = m2 - m1
 print(m3)
 print(m4)
 
+
 # stdout +
 # 6	 27	38
 # 49 62	72
 # 82 92	16
 # 61 40	42
+
 # stdout -
 # -4 -23 -32
 # -41 -52 -60
