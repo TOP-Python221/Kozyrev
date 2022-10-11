@@ -14,12 +14,12 @@ class Add_class:
         designer = 'def __init__(self):'
         lines = ' ' * (self.indent + 1) * self.indent_size
         new_designer = ''
-        re = ''
+        string_parameter = ''
         new_class = f'class {self.name_class}:'
         if self.designer_class:
             for el in self.designer_class:
-                re += f'{lines + lines}{el}\n'
-            new_designer += f'{new_class}\n{lines}{designer}\n{re}'
+                string_parameter += f'{lines + lines}{el}\n'
+            new_designer += f'{new_class}\n{lines}{designer}\n{string_parameter}'
         else:
             new_designer = f'{new_class}\n{lines}pass'
         return new_designer
@@ -29,7 +29,6 @@ class Builder_class(Add_class):
     def __init__(self, name):
         super().__init__()
         self.name_class = name
-        self.add = Add_class()
 
     def add_field(self, parameter: str, meaning: str = "''"):
         self.designer_class.append(f'self.{parameter} = {meaning}')
